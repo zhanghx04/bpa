@@ -5,8 +5,14 @@
 #include <iostream>
 #include <numbers>
 
+#include <iostream>
+#include <filesystem>
+
 #include "../src/bpa.h"
 #include "../src/IO.h"
+
+using std::system;
+namespace fs = std::filesystem;
 
 using namespace bpa;
 
@@ -41,6 +47,7 @@ namespace {
 	}
 }
 
+/*
 TEST(reconstruct, sphere_36_18) {
 	const auto cloud = createSphericalCloud(36, 18);
 	savePoints("sphere_36_18_cloud.ply", cloud);
@@ -94,4 +101,29 @@ TEST(reconstruct, bunny) {
 	const auto cloud = loadXYZ("../test/data/bunny.xyz");
 	const auto mesh = measuredReconstruct(cloud, 0.002f);
 	saveTriangles("bunny_mesh.stl", mesh);
+}
+*/
+
+TEST(reconstruct, ABQ) {
+	// double radius = 2.0f;
+	std::string filename = "abq_blocks_outside_normals_ascii";
+	std::string output_directory = "../outputs/" + filename + "/";
+
+	auto ret = fs::create_directories(output_directory);
+
+	if (ret) {
+        std::cout << "directory " << filename << " created!!!" << std::endl;
+    } else {
+        std::cout << "folder:" << filename << " exist" << std::endl;
+    }
+
+	const auto cloud = loadXYZ("../test/data/" + filename + ".xyz");
+
+	for (double radius = 1.5f; radius <= 5.5; radius += 0.5f) {
+		const auto mesh = measuredReconstruct(cloud, radius);
+		std::string r = std::to_string(radius);
+		r.erase( r.find_first_of('.') + 3);
+		std::string filepath = output_directory + r + "_abq_blocks_outside_normals_ascii.stl";
+		saveTriangles(filepath, mesh);
+	}
 }
