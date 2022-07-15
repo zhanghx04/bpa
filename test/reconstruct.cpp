@@ -109,8 +109,8 @@ TEST(reconstruct, ABQ) {
 	std::string filename = "abq_blocks_outside_normals_ascii";
 	std::string output_directory = "../outputs/" + filename + "/";
 
+	// check if the directory is exist
 	auto ret = fs::create_directories(output_directory);
-
 	if (ret) {
         std::cout << "directory " << filename << " created!!!" << std::endl;
     } else {
@@ -121,9 +121,12 @@ TEST(reconstruct, ABQ) {
 
 	for (double radius = 1.5f; radius <= 5.5; radius += 0.5f) {
 		const auto mesh = measuredReconstruct(cloud, radius);
+
+		// get the ouptut file name
 		std::string r = std::to_string(radius);
 		r.erase( r.find_first_of('.') + 3);
 		std::string filepath = output_directory + r + "_abq_blocks_outside_normals_ascii.stl";
+
 		saveTriangles(filepath, mesh);
 	}
 }
