@@ -9,7 +9,8 @@
 #include <numeric>
 #include <numbers>
 
-#include <glm/gtx/io.hpp>
+// #include <glm/gtx/io.hpp>
+#include "/usr/local/include/glm/gtx/io.hpp"
 
 #include "IO.h"
 
@@ -241,7 +242,7 @@ namespace bpa {
 				}
 
 				{
-					auto angle = std::acos(std::clamp(dot(oldCenterVec, newCenterVec), -1.0f, 1.0f));
+					auto angle = std::acos(clamp(dot(oldCenterVec, newCenterVec), -1.0f, 1.0f));
 					if (dot(cross(newCenterVec, oldCenterVec), e->a->pos - e->b->pos) < 0)
 						angle += std::numbers::pi_v<float>;
 					if (angle < smallestAngle) {

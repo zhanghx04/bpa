@@ -3,7 +3,8 @@
 #include <array>
 #include <vector>
 
-#include <glm/glm.hpp>
+// #include <glm/glm.hpp>
+#include "/usr/local/include/glm/glm.hpp"
 
 namespace bpa {
 	struct Triangle : std::array<glm::vec3, 3> {
