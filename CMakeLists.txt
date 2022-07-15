@@ -6,7 +6,17 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # find packages
-find_package(glm CONFIG REQUIRED)
+find_package(GLM REQUIRED)
+include_directories(${GLM_INCLUDE_DIRS})
+link_directories(${GLM_LIBRARY_DIRS})
+add_definitions(${GLM_DEFINITIONS})
+
+if (NOT GLM_FOUND)
+	message(Error "GLM not found")
+else (NOT GLM_FOUND)
+	message("GLM Found - ")
+endif(NOT GLM_FOUND)
+
 find_package(GTest MODULE REQUIRED)
 
 # library
@@ -15,9 +25,7 @@ add_library(${PROJECT_NAME} ${source_files} README.md)
 source_group("" FILES ${source_files})
 source_group(TREE ${CMAKE_CURRENT_LIST_DIR} FILES ${source_files})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-	glm
-)
+target_link_libraries(${PROJECT_NAME} ${GLM_LIBRARIES})
 
 if(MSVC)
 	target_compile_options(${PROJECT_NAME} PRIVATE /W4 /experimental:module)
@@ -34,7 +42,7 @@ source_group(TREE ${CMAKE_CURRENT_LIST_DIR} FILES ${test_files})
 target_link_libraries(tests PRIVATE
 	${PROJECT_NAME}
 	GTest::GTest GTest::Main
-	glm
+	${GLM_LIBRARIES}
 )
 
 # clang-format
