@@ -42,5 +42,7 @@ cmake ..
         ```
     4. Run the executable file with
         ```bash
-            $ ./tests
+            $ ./test_run
         ```
+
+5. The Ouputs will be stored in the ```bpa/outputs/inputfile_name```
