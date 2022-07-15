@@ -35,7 +35,7 @@ endif()
 
 # tests
 file(GLOB test_files test/*)
-add_executable(tests ${test_files})
+add_executable(test_run ${test_files})
 source_group("" FILES ${test_files})
 source_group(TREE ${CMAKE_CURRENT_LIST_DIR} FILES ${test_files})
 
